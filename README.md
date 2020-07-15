@@ -1,0 +1,1 @@
+Jupyter Notebook with sample code for analyzing body temperature readings exported from the [Kinsa app](https://play.google.com/store/apps/details?id=com.kinsa.polaris.app), used for [this self-tracking project](https://forum.quantifiedself.com/t/tracking-body-temperature/7921/).
