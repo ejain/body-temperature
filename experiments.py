@@ -1,9 +1,9 @@
 import altair as alt
 import pandas as pd
 
-def plot(df, experiments, timezone):
+def plot(df, experiments, timezone, time_range=[0, 60], value_range=[34, 41]):
     df = _extract(df, experiments, timezone)
-    return _plot(df)
+    return _plot(df, time_range, value_range)
 
 def _extract(df, experiments, timezone):
     data = []
@@ -21,9 +21,9 @@ def _extract(df, experiments, timezone):
             })
     return pd.DataFrame(data)
 
-def _plot(df):
-    scale_x = alt.Scale(domain=[0, 60])
-    scale_y = alt.Scale(domain=[34, 41])
+def _plot(df, time_range, value_range):
+    scale_x = alt.Scale(domain=time_range)
+    scale_y = alt.Scale(domain=value_range)
     chart = alt.Chart().encode(
         y=alt.Y("value:Q", axis=alt.Axis(grid=True, title="temperature (°C)"), scale=scale_y)
     ).properties(
