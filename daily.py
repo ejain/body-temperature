@@ -1,11 +1,11 @@
 import altair as alt
 
 def plot(df, window=7):
-    df = _first(df)
+    df = _first_of_day(df)
     df = _with_rolling_median(df, window)
     return _plot(df)
 
-def _first(df):
+def _first_of_day(df):
     return df.resample("D", on="time").agg("first").dropna().reset_index(drop=True)
 
 def _with_rolling_median(df, window):

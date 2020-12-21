@@ -28,14 +28,14 @@ def parse(path, year, timezone):
                     "time": _isoformat(year, month, day_of_month, record_match.group(1), timezone),
                     "site": record_match.group(2),
                     "device": record_match.group(3),
-                    "value": record_match.group(4)
+                    "value": float(record_match.group(4))
                 })
                 continue
     return _df(records, timezone)
 
 def _isoformat(year, month, day_of_month, time_of_day, timezone):
     s = "%d %s %s %s" % (year, month, day_of_month, time_of_day)
-    return timezone.localize(datetime.strptime(s, '%Y %b %d %I:%M %p')).isoformat()
+    return timezone.localize(datetime.strptime(s, "%Y %b %d %I:%M %p"))
 
 def _df(records, timezone):
     df = pd.DataFrame(records)
