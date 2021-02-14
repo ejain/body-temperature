@@ -1,0 +1,9 @@
+name: body-temperature
+channels:
+  - conda-forge
+dependencies:
+  - python=3.8.*
+  - altair=4.1.*
+  - jupyter
+  - pandas=1.2.*
+  - pytz
