@@ -4,7 +4,7 @@ from datetime import datetime
 import pandas as pd
 
 _date_pattern = re.compile(
-    r"\[\w{3} (\w+) (\d{1,2})\]" # [Sat Jul 4]
+    r"\[\w{3}, (\w{3}) (\d{1,2}), (\d{4})\]" # [Sat, Jan 1, 2022]
 )
 
 _record_pattern = re.compile(
@@ -13,17 +13,24 @@ _record_pattern = re.compile(
     r"(\d+?\.\d+?)°C.+?\." # 36.9°C No Fever.
 )
 
-def parse(path, year, timezone):
+def parse(path, timezone):
     records = []
     with open(path, encoding="utf-8") as source:
         for line in source:
+            if line.strip() == "":
+                month = None
+                day_of_month = None
+                year = None
             date_match = _date_pattern.match(line)
             if date_match:
                 month = date_match.group(1)
                 day_of_month = date_match.group(2)
+                year = int(date_match.group(3))
                 continue
             record_match = _record_pattern.match(line)
             if record_match:
+                if year is None:
+                    raise ValueError("Couldn't find a date before processing line <%s>" % (line))
                 records.append({
                     "time": _isoformat(year, month, day_of_month, record_match.group(1), timezone),
                     "site": record_match.group(2),
