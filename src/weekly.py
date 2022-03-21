@@ -9,7 +9,7 @@ def _first_of_day(df):
     return df.resample("D", on="time").agg("first").dropna().reset_index(drop=True)
 
 def _resample_weekly(df):
-    return df.set_index("time").value.resample("W-MON").agg(["median", "min", "max"]).dropna().reset_index()
+    return df.set_index("time").value.resample("W-MON", label='left', closed='left').agg(["median", "min", "max"]).dropna().reset_index()
 
 def _plot(df):
     scale_y = alt.Scale(domain=[36, 38])
