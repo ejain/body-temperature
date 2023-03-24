@@ -6,7 +6,7 @@ def plot(df, window=7):
     return _plot(df)
 
 def _first_of_day(df):
-    return df.resample("D", on="time").agg("first").dropna().reset_index(drop=True)
+    return df.resample("D", on="time").agg("first").dropna().reset_index(drop=False)
 
 def _with_rolling_median(df, window):
     return df.assign(value_median=df["value"].rolling(window).median())

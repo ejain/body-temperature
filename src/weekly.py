@@ -6,7 +6,7 @@ def plot(df, df_t):
     return _plot(df, df_t)
 
 def _first_of_day(df):
-    return df.resample("D", on="time").agg("first").dropna().reset_index(drop=True)
+    return df.resample("D", on="time").agg("first").dropna().reset_index(drop=False)
 
 def _resample_weekly(df):
     return df.set_index("time").value.resample("W-MON", label='left', closed='left').agg(["median", "min", "max"]).dropna().reset_index()
